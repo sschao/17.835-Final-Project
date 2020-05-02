@@ -17,7 +17,7 @@ for file in os.listdir("Followers of Candidates/"):
         s = analyzer.polarity_scores(tweet)['compound']
         if s > 0.05:
             l.append(('pos', s))
-        elif s < 0.05:
+        elif s < -0.05:
             l.append(('neg', s))
         else:
             l.append(('neutral', s))
