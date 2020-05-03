@@ -1,10 +1,11 @@
-import twint
-import nest_asyncio
+import os
+
 import pandas as pd
-import pickle
-import time
+import twint
+
+
 # nest_asyncio.apply()
-#could potentially remove this. It was running into looping errors on my setup without this
+# could potentially remove this. It was running into looping errors on my setup without this
 
 def followers(username, num_followers):
     """
@@ -88,28 +89,38 @@ def tweets_from_relevant_usernames(num_tweets, file_path = None, usernames = Fal
 if __name__ == "__main__":
     # userfollowers = followers("berniesanders", 100)
     # tweets = retrieve_tweets('berniesanders', 10)
-    #followers_to_csv("berniesanders", 10000)
+    # followers_to_csv("berniesanders", 10000)
     follow = {}
-    people = [ "JoinRocky", "MikeBloomberg", "PeteButtigeig", "KamalaHarris", "TulsiGabbard", "AndrewYang", "TomSteyer"
-                 "SenatorBennet","GovBillWeld","WalshFreedom"]
-    while not len(people) == 0:
-        name = people.pop(0)
-        try:
-            follow[name] = followers(name, 1000)
-            df = tweets_from_relevant_usernames(5, file_path=None, usernames=follow[name])
-            with open(name+".pkl", "wb") as f:
-                pickle.dump(df, f)
-                f.close()
-        except:
-            people.append(name)
-            time.sleep(120)
+    q = ["realDonaldTrump", "JoeBiden", "ewarren", "berniesanders", "amyklobuchar", "JoinRocky", "MikeBloomberg",
+         "PeteButtigeig", "KamalaHarris", "TulsiGabbard", "AndrewYang", "TomSteyer",
+         "SenatorBennet", "GovBillWeld", "WalshFreedom"]
 
+    while len(q) > 0:
+        person = q.pop(0)
+        try:
+            print(person)
+            followers_to_csv(person, 5000)
+            os.rename("Twitter_Data/usernames.csv", "Twitter_Data/" + person + ".csv")
+        except:
+            q.append(person)
+
+    # while not len(people) == 0:
+    #     name = people.pop(0)
+    #     try:
+    #         follow[name] = followers(name, 1000)
+    #         df = tweets_from_relevant_usernames(5, file_path=None, usernames=follow[name])
+    #         with open(name+".pkl", "wb") as f:
+    #             pickle.dump(df, f)
+    #             f.close()
+    #     except:
+    #         people.append(name)
+    #         time.sleep(120)
 
     # df = rel_tweets = tweets_from_relevant_usernames(5, file_path = "Twitter_Data/usernames.csv", usernames=False)
     # import pickle
     # with open("tweets.pkl", "wb") as f:
     #     pickle.dump(df, f)
     #     f.close()
-    #print(rel_tweets)
+    # print(rel_tweets)
     # print(tweets.columns)
     #print(rel_tweets['tweet'])
