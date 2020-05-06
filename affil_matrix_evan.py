@@ -44,13 +44,13 @@ def following(username, num_following):
     list_of_following = Following_df['following'][username]
     return list_of_following
 
-affil.to_csv('affiliation_matrix_lower_chao_0.csv') #initial csv
+affil.to_csv('affiliation_matrix_lower_evan_0.csv') #initial csv
 
 
-success = 13
-affil_csv = pd.read_csv(f'affiliation_matrix_lower_chao_{str(success)}.csv', index_col = 0)
-affil = affil_csv[0:33000] #Shawn's work
-# affil = affil_csv[33000:] #Evan uncomment
+success = 0
+affil_csv = pd.read_csv(f'affiliation_matrix_lower_evan_{str(success)}.csv', index_col = 0)
+# affil = affil_csv[0:33000] #Shawn's work
+affil = affil_csv[33000:] #Evan uncomment
 usernames_index_list = list(affil.index)
 # original_length = len(usernames_index_list)
 # for i in range(len(usernames_index_list)):
@@ -76,10 +76,9 @@ while len(usernames_index_list) != 0:
             # affil.to_csv(f'affiliation_matrix_{str(original_length-len(usernames_index_list))}.csv')
             # os.remove(f'affiliation_matrix_{str(original_length-len(usernames_index_list)-1)}.csv')
             success += 1
-            affil.to_csv(f'affiliation_matrix_lower_chao_{str(success)}.csv') #new file
-            os.remove(f'affiliation_matrix_lower_chao_{str(success-1)}.csv') #remove old file
+            affil.to_csv(f'affiliation_matrix_lower_evan_{str(success)}.csv') #new file
+            os.remove(f'affiliation_matrix_lower_evan_{str(success-1)}.csv') #remove old file
 
     except:
         usernames_index_list.append(user) #add the user back in if we failed
         time.sleep(60) #pause
-
