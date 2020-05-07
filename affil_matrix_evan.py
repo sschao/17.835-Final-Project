@@ -1,21 +1,22 @@
-import pandas as pd
-import twint
 import os
+import random
+import time
 from os import listdir
 from os.path import isfile, join
-import time
-import random
 
+import pandas as pd
+import twint
 
-path = os.path.abspath(os.getcwd()) +"\\candidate_follower_usernames" #path of original datafiles
-file_names = [f for f in listdir(path) if isfile(join(path, f))] #file names in path
-candidate_usernames = [file_name[:-4].lower() for file_name in file_names] #take out csvs for twitter handles
+path = join(os.path.abspath(os.getcwd()), "candidate_follower_usernames")  # path of original datafiles
+file_names = [f for f in listdir(path) if isfile(join(path, f))]  # file names in path
+candidate_usernames = [file_name[:-4].lower() for file_name in file_names]  # take out csvs for twitter handles
 usernames_df = pd.DataFrame()
 for file_name in file_names:
-    df_candidate_username = pd.read_csv(os.path.abspath(os.getcwd()) +"\\candidate_follower_usernames\\"+file_name)
-    usernames_df = pd.concat([usernames_df,df_candidate_username]) #merge all dataframes of usernames together
+    df_candidate_username = pd.read_csv(join(os.path.abspath(os.getcwd()), "candidate_follower_usernames", file_name))
+    usernames_df = pd.concat([usernames_df, df_candidate_username])  # merge all dataframes of usernames together
 
-df_sanders_followers= pd.read_csv(os.path.abspath(os.getcwd()) +"\\candidate_follower_usernames\\berniesanders.csv")
+df_sanders_followers = pd.read_csv(
+    join(os.path.abspath(os.getcwd()), "candidate_follower_usernames", "berniesanders.csv"))
 # print(twitter_usernames)
 # test = pd.read_pickle('Followers of Candidates/ewarren.pkl')
 # print(len(test['username'].unique()))
